@@ -1,4 +1,4 @@
-package com.score;
+package com.relesi.score;
 
 
 
