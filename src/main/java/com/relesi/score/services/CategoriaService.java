@@ -37,7 +37,8 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
 		return repo.save(obj);
 	}
 
@@ -53,15 +54,19 @@ public class CategoriaService {
 	public List<Categoria> findAll() {
 		return repo.findAll();
 	}
-	
-	//paginacção utilizando Page e PageRequest do SpringData
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+
+	// paginacção utilizando Page e PageRequest do SpringData
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
-	
+
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 
 }
