@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.relesi.score.domain.Categoria;
+import com.relesi.score.domain.ItemPedido;
 import com.relesi.score.domain.Produto;
 import com.relesi.score.repositories.CategoriaRepository;
 import com.relesi.score.repositories.ProdutoRepository;
@@ -37,6 +38,11 @@ public class ProdutoService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		List<Categoria> categorias = categoriaRepository.findAll(ids);
 		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);
+	}
+
+	public static ItemPedido findAll(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

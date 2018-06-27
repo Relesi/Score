@@ -15,8 +15,8 @@ import com.relesi.score.domain.Endereco;
 import com.relesi.score.domain.Estado;
 import com.relesi.score.domain.ItemPedido;
 import com.relesi.score.domain.Pagamento;
-import com.relesi.score.domain.PagametoComCartao;
-import com.relesi.score.domain.PagamnetoComBoleto;
+import com.relesi.score.domain.PagamentoComCartao;
+import com.relesi.score.domain.PagamentoComBoleto;
 import com.relesi.score.domain.Pedido;
 import com.relesi.score.domain.Produto;
 import com.relesi.score.domain.enums.EstadoPagamento;
@@ -147,10 +147,10 @@ public class ScoreApplication implements CommandLineRunner {
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32" ), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35" ), cli1, e2);
 		
-		Pagamento pagto1 = new PagametoComCartao(null, EstadoPagamento.QUITADO, ped1,6);
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1,6);
 		ped1.setPagamento(pagto1);
 		
-		Pagamento pagto2 = new PagamnetoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00" ), null);
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00" ), null);
 		ped2.setPagamento(pagto2);
 		
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));

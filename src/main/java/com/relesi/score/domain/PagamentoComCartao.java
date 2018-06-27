@@ -2,20 +2,22 @@ package com.relesi.score.domain;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.relesi.score.domain.enums.EstadoPagamento;
 
 @Entity
-public class PagametoComCartao extends Pagamento {
+@JsonTypeName("pagamentoComCartao")
+public class PagamentoComCartao extends Pagamento {
 	
 	private static final long serialVersionUID = 1L;
 
 	private Integer numeroDeParcelas;
 	
-	public PagametoComCartao() {
+	public PagamentoComCartao() {
 		
 	}
 
-	public PagametoComCartao(Integer id, EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {
+	public PagamentoComCartao(Integer id, EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {
 		super(id, estado, pedido);	
 		this.numeroDeParcelas = numeroDeParcelas;
 	}
