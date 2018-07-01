@@ -30,9 +30,12 @@ import com.relesi.score.repositories.PagamentoRepository;
 import com.relesi.score.repositories.PedidoRepository;
 import com.relesi.score.repositories.ProdutoRepository;
 
+
 @Service
 public class DBService {
 
+
+	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
@@ -60,9 +63,7 @@ public class DBService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
-	
 	public void instantiateTestDatabase() throws ParseException {
-		
 		
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
@@ -73,7 +74,6 @@ public class DBService {
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 	
 
-		
 
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -169,10 +169,6 @@ public class DBService {
 
 		itemPedidoRepository.save(Arrays.asList(ip1, ip2, ip3));
 		
-	
 		
 	}
-	
 }
-
-
