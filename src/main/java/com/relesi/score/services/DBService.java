@@ -34,7 +34,6 @@ import com.relesi.score.repositories.ProdutoRepository;
 @Service
 public class DBService {
 
-
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
