@@ -19,12 +19,12 @@ public class SmtpEmailService extends AbstractEmailService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
 	
+
 	@Override
 	public void sendEmail(SimpleMailMessage msg) {
 		LOG.info("Enviando email...");
 		mailSender.send(msg);
 		LOG.info("Email enviado");
-		
 	}
 
 	@Override
@@ -32,9 +32,5 @@ public class SmtpEmailService extends AbstractEmailService {
 		LOG.info("Enviando email...");
 		javaMailSender.send(msg);
 		LOG.info("Email enviado");
-		
 	}
-	
-	
-
 }

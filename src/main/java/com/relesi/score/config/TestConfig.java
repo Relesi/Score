@@ -11,16 +11,18 @@ import com.relesi.score.services.DBService;
 import com.relesi.score.services.EmailService;
 import com.relesi.score.services.MockEmailService;
 
+
+
 @Configuration
 @Profile("test")
 public class TestConfig {
-	
+
 	@Autowired
 	private DBService dbService;
-
+	
 	@Bean
-	public boolean instatiateDatabase() throws ParseException {		
-		dbService.instantiateTestDatabase();		
+	public boolean instantiateDatabase() throws ParseException {
+		dbService.instantiateTestDatabase();
 		return true;
 	}
 	
