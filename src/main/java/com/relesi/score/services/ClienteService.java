@@ -14,12 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.relesi.score.domain.Cidade;
 import com.relesi.score.domain.Cliente;
 import com.relesi.score.domain.Endereco;
+import com.relesi.score.domain.enums.Perfil;
 import com.relesi.score.domain.enums.TipoCliente;
 import com.relesi.score.dto.ClienteDTO;
 import com.relesi.score.dto.ClienteNewDTO;
 import com.relesi.score.repositories.CidadeRepository;
 import com.relesi.score.repositories.ClienteRepository;
 import com.relesi.score.repositories.EnderecoRepository;
+import com.relesi.score.security.UserSS;
+import com.relesi.score.services.exceptions.AuthorizationException;
 import com.relesi.score.services.exceptions.DataIntegratyException;
 import com.relesi.score.services.exceptions.ObjectNotFoundException;
 
@@ -39,6 +42,13 @@ public class ClienteService {
 	public EnderecoRepository enderecoRepository;
 
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if(user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Cliente obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException(
