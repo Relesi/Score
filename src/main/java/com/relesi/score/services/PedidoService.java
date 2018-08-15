@@ -3,9 +3,13 @@ package com.relesi.score.services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.relesi.score.domain.Cliente;
 import com.relesi.score.domain.ItemPedido;
 import com.relesi.score.domain.PagamentoComBoleto;
 import com.relesi.score.domain.Pedido;
@@ -15,6 +19,8 @@ import com.relesi.score.repositories.ItemPedidoRepository;
 import com.relesi.score.repositories.PagamentoRepository;
 import com.relesi.score.repositories.PedidoRepository;
 import com.relesi.score.repositories.ProdutoRepository;
+import com.relesi.score.security.UserSS;
+import com.relesi.score.services.exceptions.AuthorizationException;
 import com.relesi.score.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -77,5 +83,15 @@ public class PedidoService {
 				emailService.sendOrderConfirmationHtmlEmail(obj);
 				return obj;
 			}
-
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteRepository.findOne(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
+	}
 }
