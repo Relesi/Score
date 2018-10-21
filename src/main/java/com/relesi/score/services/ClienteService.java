@@ -53,7 +53,7 @@ public class ClienteService {
 
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
-	
+
 	@Value("${img.profile.size}")
 	private Integer size;
 
@@ -100,6 +100,22 @@ public class ClienteService {
 		return repo.findAll();
 	}
 
+	public Cliente findByEmail(String email) {
+
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acess negado!");
+		}
+
+		Cliente obj = repo.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+
+		return obj;
+	}
+
 	// paginacção utilizando Page e PageRequest do SpringData
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
@@ -144,10 +160,10 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		
+
 		jpgImage = imageService.cropSquare(jpgImage);
-		jpgImage = imageService.resize(jpgImage, size);		
-		
+		jpgImage = imageService.resize(jpgImage, size);
+
 		String fileName = prefix + user.getId() + ".jpg";
 
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
