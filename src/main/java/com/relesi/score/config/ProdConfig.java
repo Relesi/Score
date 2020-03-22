@@ -15,7 +15,7 @@ import com.relesi.score.services.SmtpEmailService;
 
 
 @Configuration
-@Profile("dev")
+@Profile("prod")
 public class ProdConfig {
 
 	@Autowired
